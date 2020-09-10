@@ -1,0 +1,2 @@
+sample,fastq,barcode,genome,transcriptome
+CML10,/home/genouest/cnrs_umr6290/mlorthiois/double_nanoseq/results/guppy/fastq/CML10.fastq.gz,1,/groups/dog/data/canFam3/sequence/softmasked/Canis_familiaris.CanFam3.1.72.dna_sm.toplevel.fa,/groups/dog/data/canFam3/annotation/Ensembl99/Canis_familiaris.CanFam3.1.99.gtf
