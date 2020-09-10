@@ -1,7 +1,7 @@
 # Informations
 
 - Nanoseq presents a problem, and has to be used in two steps.
-- The singularity images that working are store in /groups/dog/matthias/singularity
+- The singularity images that working are stored in `/groups/dog/matthias/singularity`.
 
 # Usage
 
