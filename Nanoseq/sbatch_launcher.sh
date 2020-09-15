@@ -1,11 +1,10 @@
 #!/bin/bash
 
-#SBATCH --mail-type=ALL         	
-#SBATCH --mail-user=matthias.lorthiois@univ-rennes1.fr     	
 #SBATCH --job-name=double_nanoseq
-#SBATCH --chdir=/home/genouest/cnrs_umr6290/mlorthiois/double_nanoseq
-#SBATCH --nodelist=cl1n038
-#SBATCH --cpus-per-task=36
+#SBATCH --chdir=${working_directory}
+#SBATCH --nodelist=genogpu2
+#SBATCH --gres=gpu:1 -p gpu
+#SBATCH --cpus-per-task=16
 #SBATCH --mem=30G
 
 working_directory=$(pwd)
@@ -24,7 +23,9 @@ nextflow run nf-core/nanoseq \
     --kit SQK-DCS109 \
     --skip_demultiplexing \
     --skip_qc \
-    --max_cpus 36
+    --max_cpus 16
+    --guppy_gpu true \
+    --guppy_config /groups/dog/script/ont/ont-guppy/data/dna_r9.4.1_450bps_hac.cfg
 
 nextflow run nf-core/nanoseq \
     --input ${working_directory}/input_fasta.csv \
@@ -34,7 +35,7 @@ nextflow run nf-core/nanoseq \
     --kit SQK-DCS109 \
     --skip_basecalling \
     --skip_demultiplexing \
-    --max_cpus 30 \
+    --max_cpus 16 \
     -profile singularity \
     -with-singularity /groups/dog/matthias/singularity/nfcore-nanoseq-dev.img \
     -r 1.0.0
