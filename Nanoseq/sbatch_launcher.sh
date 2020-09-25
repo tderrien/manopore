@@ -19,8 +19,6 @@ nextflow run nf-core/nanoseq \
     --input ${working_directory}/input_first_step.csv \
     --protocol cDNA \
     --input_path ${data_repo} \
-    --flowcell FLO-MIN106 \
-    --kit SQK-DCS109 \
     --skip_demultiplexing \
     --max_cpus $CPU \
     --guppy_gpu true \
@@ -30,8 +28,6 @@ nextflow run nf-core/nanoseq \
     --input ${working_directory}/input_second_step.csv \
     --protocol cDNA \
     --input_path ${data_repo} \
-    --flowcell FLO-MIN106 \
-    --kit SQK-DCS109 \
     --skip_basecalling \
     --skip_demultiplexing \
     --max_cpus $CPU \
