@@ -24,6 +24,8 @@ nextflow run nf-core/nanoseq \
     --guppy_gpu true \
     --guppy_config /groups/dog/script/ont/ont-guppy/data/dna_r9.4.1_450bps_hac.cfg
 
+mv results/pipeline_info results/pipeline_info_first_step
+
 nextflow run nf-core/nanoseq \
     --input ${working_directory}/input_second_step.csv \
     --protocol cDNA \
