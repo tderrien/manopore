@@ -15,7 +15,7 @@ CPU=16
 nextflow run nf-core/nanoseq \
     -r 1.0.0 \
     -profile singularity \
-    -with-singularity /groups/dog/matthias/singularity/nfcore-nanoseq-dev.img \
+    -with-singularity /groups/dog/mlorthiois/singularity/nfcore-nanoseq-dev.img \
     --input ${working_directory}/input_first_step.csv \
     --protocol cDNA \
     --input_path ${data_repo} \
