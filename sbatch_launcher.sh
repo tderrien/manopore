@@ -70,4 +70,4 @@ echo "Sequencing date: $date" >> metadata_report.txt
 ## Put NanoPlot report on Web
 new_report="results/nanoplot/summary/$sample_id.$guppy_version.$kit.$date.html"
 cp results/nanoplot/summary/NanoPlot-report.html $new_report
-putonWeb.sh $new_report ~tderrien/webdata/igdrion/
+/home/genouest/cnrs_umr6290/tderrien/bin/putonWeb.sh $new_report ~tderrien/webdata/igdrion/
