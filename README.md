@@ -11,7 +11,7 @@
    - The base directory of your sample (not fast5_pass or fast5_fail, the parent dir)
    - The reference annotation and genome
    - The Flowcell ID and the kit
-   - The version of Guppy (need to be available (here)[https://hub.docker.com/r/genomicpariscentre/guppy-gpu/tags])
+   - The version of Guppy (need to be available [here](https://hub.docker.com/r/genomicpariscentre/guppy-gpu/tags))
 
 2. This pipeline will automaticaly create the input files, pull Nanoseq from github, run Nanoseq on GPU, and put a Quality Check online (NanoPlot).
 
