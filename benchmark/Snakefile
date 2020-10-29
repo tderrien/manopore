@@ -1,0 +1,83 @@
+samples=["twiny_DNA"]
+versions=["3.2.2", "3.4.4", "3.6.1", "4.0.14"]
+
+rule all:
+    input:
+        expand("results/twiny_DNA/{version}/results/guppy/fastq/twiny_DNA.fastq.gz", 
+                version=versions)
+
+rule install_nanoseq:
+    input:
+        "results/twiny_DNA/{version}/main.nf"
+    output:
+        "results/twiny_DNA/{version}/input_second_step.csv"
+    shell:
+        """
+        cd results/twiny_DNA/{wildcards.version}
+        echo "singularity.cacheDir = '/home/genouest/cnrs_umr6290/mlorthiois/workspace/singularity'" >> nextflow.config 
+        sed -i -r "s/guppy-gpu:[0-9].[0-9].[0-9]{{1,2}}/guppy-gpu:{wildcards.version}/g" conf/base.config
+        echo "sample,fastq,barcode,genome,transcriptome" >> input_second_step.csv 
+        echo "twiny_DNA,results/guppy/fastq/twiny_DNA.fastq.gz,1,/groups/dog/data/canFam3/sequence/softmasked/Canis_familiaris.CanFam3.1.72.dna_sm.toplevel.fa,/groups/dog/data/canFam3/annotation/Ensembl99/Canis_familiaris.CanFam3.1.99.gtf" >> input_second_step.csv
+        """
+
+rule first_step:
+    input:
+        "results/twiny_DNA/{version}/input_second_step.csv"
+    output:
+        "results/twiny_DNA/{version}/results/guppy/fastq/twiny_DNA.fastq.gz"
+    params:
+        "/home/genouest/cnrs_umr6290/mlorthiois/workspace/bench_nanoseq"
+    threads:
+        workflow.cores
+    conda:
+        "nextflow.yml"
+    shell:
+        """
+        export GOPATH=/local/singularity/3.6.4/go/go
+        export PATH=/local/singularity/3.6.4/bin:/local/singularity/3.6.4/go/bin:$PATH
+
+        cd results/twiny_DNA/{wildcards.version}
+        
+        nextflow run main.nf \
+            -profile singularity \
+            -with-singularity /groups/dog/matthias/singularity/nfcore-nanoseq-dev.img \
+            --input {params}/samples/twiny_DNA/input_first_step.csv \
+            --protocol DNA \
+            --input_path {params}/samples/twiny_DNA \
+            --skip_demultiplexing \
+            --max_cpus {workflow.cores} \
+            --guppy_gpu true \
+            --flowcell FLO-MIN106 \
+            --kit SQK-RAD004 \
+        
+        mv results/pipeline_info results/pipeline_info_first_step
+        """
+
+# rule second_step:
+#     input:
+#         "results/twiny_DNA/{version}/results/guppy/fastq/twiny_DNA.fastq.gz"
+#     output:
+#         "results/twiny_DNA/{version}/results/minimap2/twiny_DNA.sorted.bam"
+#     params:
+#         "/home/genouest/cnrs_umr6290/mlorthiois/workspace/bench_nanoseq"
+#     threads:
+#         workflow.cores
+#     conda:
+#         "nextflow.yml"
+#     shell:
+#         """
+#         export GOPATH=/local/singularity/3.6.4/go/go
+#         export PATH=/local/singularity/3.6.4/bin:/local/singularity/3.6.4/go/bin:$PATH
+
+#         cd results/twiny_DNA/{wildcards.version}
+        
+#         nextflow run main.nf \
+#             --input input_second_step.csv \
+#             --protocol directRNA \
+#             --input_path {params}/samples/twiny_DNA \
+#             --skip_basecalling \
+#             --skip_demultiplexing \
+#             --max_cpus {workflow.cores} \
+#             -profile singularity
+#         """
+
