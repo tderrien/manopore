@@ -1,11 +1,9 @@
-guppy_version=$(grep guppy results/pipeline_info/software_versions.csv | cut -f 2)
-flowcell_id=$(grep " - Flowcell ID: " results/pipeline_info_first_step/pipeline_report.txt | cut -f 2 -d ":" | sed 's/^ //')
-kit_version=$(grep " - Kit ID: " results/pipeline_info_first_step/pipeline_report.txt | cut -f 2 -d ":" | sed 's/^ //')
-flowcell_version=$(grep "$flowcell_id $kit_version" flowcell_version.txt | cut -f 2 -d "_")
+guppy_version=$(grep guppy results/pipeline_info_first_step/software_versions.csv | cut -f 2 | cut -d"+" -f1)
+flowcell_version=$(grep "$1 $2" flowcell_version.txt | cut -f 2 -d "_")
 nanostats=$(cat results/nanoplot/summary/NanoStats.txt | sed 's/^/  /')
 
 echo "Flowcell version: $flowcell_version"
-echo "Flowcell ID: $flowcell_id,"
-echo "Protocol kit version: $kit_version,"
+echo "Flowcell ID: $1,"
+echo "Protocol kit version: $2,"
 echo "Guppy version: $guppy_version"
-echo "Quality Control: $nanostats"
+echo "$nanostats"
