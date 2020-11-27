@@ -13,6 +13,7 @@ fasta_ref="/groups/dog/data/canFam3/sequence/softmasked/Canis_familiaris.CanFam3
 flowcell='FLO-MIN106'
 kit='SQK-DCS109'
 CPU=16
+protocol='cDNA'
 ################################################################################
 
 . /local/env/envnextflow-20.04.1.sh
@@ -38,7 +39,7 @@ nextflow run nf-core/nanoseq \
     --skip_demultiplexing \
     --max_cpus $CPU \
     --guppy_gpu true \
-    --protocol cDNA \
+    --protocol $protocol \
     -r 1.1.0 \
     -resume
 
@@ -48,7 +49,7 @@ nextflow run nf-core/nanoseq \
     -profile singularity \
     --input input_second_step.csv \
     --input_path $data_repo \
-    --protocol cDNA \
+    --protocol $protocol \
     --skip_basecalling \
     --skip_demultiplexing \
     --max_cpus $CPU \

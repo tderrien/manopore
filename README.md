@@ -1,24 +1,29 @@
-# Informations
+# Manopore
 
-- [Nanoseq](https://github.com/nf-core/nanoseq) is a bioinformatics analysis pipeline that can be used to perform basecalling, demultiplexing, mapping and QC of Nanopore DNA/RNA sequencing data.
-- At the moment (Oct 2020), it presents a problem (see [issue](https://github.com/nf-core/nanoseq/issues/77)), and has to be used in two steps.
-- The singularity images that working are stored in `/groups/dog/mlorthiois/singularity`.
+Manopore is based on [Nanoseq](https://github.com/nf-core/nanoseq) which is a bioinformatics analysis pipeline that can be used to perform basecalling, demultiplexing, mapping and QC of Nanopore DNA/RNA sequencing data. Nanoseq v1.1 also perform a reference-guided transcript discovery and quantification using [bambu](https://github.com/GoekeLab/bambu).
 
-# Usage
+## Usage
 
-1. In `sbatch_launcher`, add :
+1. Add at the top of `sbatch_launcher.sh`:
 
-   - The base directory of your sample (not fast5_pass or fast5_fail, the parent dir)
-   - The reference annotation and genome
-   - The Flowcell ID and the kit
-   - The version of Guppy (need to be available [here](https://hub.docker.com/r/genomicpariscentre/guppy-gpu/tags))
+   - The directory where your fast5 are located.
+   - The sample id.
+   - The reference annotation and genome.
+   - The Flowcell ID and the kit.
+   - The protocol (cDNA, directRNA, DNA)
 
-2. This pipeline will automaticaly create the input files, pull Nanoseq from github, run Nanoseq on GPU, and put a Quality Check online (NanoPlot).
+2. Everything is done on your side. Now, Manopore will automaticaly create the input files, run Nanoseq on GPU, and put a Quality Check online (NanoPlot).
 
-# Guppy mode
+## Outputs
 
-To print all `genouest` guppy workflows :
+At the end of Manopore, you will find :
 
-```
-/groups/dog/script/ont/ont-guppy/bin/guppy_basecaller --print_workflows
-```
+- The `fastq.gz` file created by guppy.
+- All the Quality Control done by PycoQC, NanoPlot, MultiQC.
+- The sorted BAM file computed by minimap2
+- BigWig and bigBed for visualisation.
+- Transcript reconstruction and quantification (bambu).
+
+## Issues
+
+At the moment (Dec 2020), it presents a problem (see [issue](https://github.com/nf-core/nanoseq/issues/77)), and has to be used in two steps.
