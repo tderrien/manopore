@@ -26,4 +26,4 @@ At the end of Manopore, you will find :
 
 ## Issues
 
-At the moment (Dec 2020), it presents a problem (see [issue](https://github.com/nf-core/nanoseq/issues/77)), and has to be used in two steps.
+At the moment (Dec 2020), it presents a problem (see [issue](https://github.com/nf-core/nanoseq/issues/77)), and has to be used in two steps. (04/01/20 : [Should be fixed in the next release](https://github.com/nf-core/nanoseq/issues/77#issuecomment-748228147))
